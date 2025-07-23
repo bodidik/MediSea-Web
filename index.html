@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MediSea Eğitim</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>MediSea Eğitim Platformu</h1>
+    <p>Ücretsiz tıbbi eğitim videoları</p>
+<header>
+  <h1>MediSea Eğitim Platformu</h1>
+  <p>Ücretsiz tıbbi eğitim videoları</p>
+
+  <!-- ✅ KATEGORİ SEÇİCİ EKLENDİ -->
+  <select id="kategoriSec" onchange="kategoriFiltrele()">
+    <option value="hepsi">Tüm Kategoriler</option>
+    <option value="Tıp - Endokrinoloji">Tıp - Endokrinoloji</option>
+    <option value="Tıp - Nefroloji">Tıp - Nefroloji</option>
+    <option value="Tıp - YDUS">YDUS</option>
+  </select>
+
+  <!-- ✅ ARAMA ALANI AYNEN KALDI -->
+  <input type="text" id="searchInput" placeholder="Videoda ara..." onkeyup="aramaYap()">
+</header>
+
+    <input type="text" id="searchInput" placeholder="Videoda ara..." onkeyup="aramaYap()">
+  </header>
+  <main id="videoListesi"></main>
+  <footer>
+    <p>&copy; 2025 MediSea</p>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
+
