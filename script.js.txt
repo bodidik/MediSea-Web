@@ -1,0 +1,37 @@
+const videolar = [
+  {
+    baslik: "Hiperkalsemi: Tanı ve Yönetim",
+    link: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+  },
+  {
+    baslik: "Prokalsitonin Kullanımı",
+    link: "https://www.youtube.com/embed/tgbNymZ7vqY"
+  },
+  {
+    baslik: "SIADH: Klinik Vaka ile Öğren",
+    link: "https://www.youtube.com/embed/kJQP7kiw5Fk"
+  }
+];
+
+window.onload = function () {
+  const alan = document.getElementById("videoListesi");
+  videolar.forEach(video => {
+    const kart = document.createElement("div");
+    kart.className = "video-karti";
+    kart.innerHTML = `
+      <h3>${video.baslik}</h3>
+      <iframe src="${video.link}" allowfullscreen></iframe>
+    `;
+    alan.appendChild(kart);
+  });
+};
+
+function aramaYap() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const kartlar = document.querySelectorAll(".video-karti");
+
+  kartlar.forEach(kart => {
+    const baslik = kart.querySelector("h3").innerText.toLowerCase();
+    kart.style.display = baslik.includes(input) ? "block" : "none";
+  });
+}
