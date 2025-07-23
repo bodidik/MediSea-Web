@@ -1,47 +1,62 @@
-let videolar = [];
+let tumVideolar = []; // Tüm videoları globalde tut
 
-window.onload = async function () {
-  const alan = document.getElementById("videoListesi");
-
-  try {
-    const yanit = await fetch("videos.json");
-    videolar = await yanit.json();
-    videolariGoster(videolar);
-  } catch (hata) {
-    alan.innerHTML = "<p>Videolar yüklenemedi.</p>";
-    console.error("Video verileri alınamadı:", hata);
-  }
+// Sayfa yüklendiğinde çalışır
+window.onload = function () {
+  fetch("videos.json")
+    .then(response => response.json())
+    .then(data => {
+      tumVideolar = data;
+      kategoriSecenekleriniDoldur(data);
+      videolariGoster(data);
+    });
 };
 
-function videolariGoster(liste) {
+// Videoları gösteren fonksiyon
+function videolariGoster(veri) {
   const alan = document.getElementById("videoListesi");
-  alan.innerHTML = ""; // Öncekileri temizle
-
-  liste.forEach(video => {
+  alan.innerHTML = ""; // Önce temizle
+  veri.forEach(video => {
     const kart = document.createElement("div");
     kart.className = "video-karti";
     kart.innerHTML = `
       <h3>${video.baslik}</h3>
-      <p><em>${video.kategori || "Kategori Yok"}</em></p>
       <iframe src="${video.link}" allowfullscreen></iframe>
     `;
     alan.appendChild(kart);
   });
 }
 
-function aramaYap() {
-  const arama = document.getElementById("searchInput").value.toLowerCase();
-  const kategori = document.getElementById("kategoriSec").value;
+// Kategori select menüsünü doldur
+function kategoriSecenekleriniDoldur(veri) {
+  const select = document.createElement("select");
+  select.id = "kategoriSecimi";
 
-  const filtrelenmis = videolar.filter(video => {
-    const baslikUyum = video.baslik.toLowerCase().includes(arama);
-    const kategoriUyum = kategori === "hepsi" || video.kategori === kategori;
-    return baslikUyum && kategoriUyum;
+  // Benzersiz kategorileri al
+  const kategoriler = [...new Set(veri.map(v => v.kategori))];
+  const tumSecenek = document.createElement("option");
+  tumSecenek.value = "Hepsi";
+  tumSecenek.textContent = "Tüm Kategoriler";
+  select.appendChild(tumSecenek);
+
+  kategoriler.forEach(kat => {
+    const secenek = document.createElement("option");
+    secenek.value = kat;
+    secenek.textContent = kat;
+    select.appendChild(secenek);
   });
 
-  videolariGoster(filtrelenmis);
+  // Kategori seçim değişince filtrele
+  select.onchange = function () {
+    const secilen = this.value;
+    if (secilen === "Hepsi") {
+      videolariGoster(tumVideolar);
+    } else {
+      const filtrelenmis = tumVideolar.filter(v => v.kategori === secilen);
+      videolariGoster(filtrelenmis);
+    }
+  };
+
+  // Header'a ekle
+  document.querySelector("header").appendChild(select);
 }
 
-function kategoriFiltrele() {
-  aramaYap(); // Arama ve kategori birlikte çalışsın
-}
