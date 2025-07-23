@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MediSea Eğitim</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>MediSea Eğitim Platformu</h1>
+    <p>Ücretsiz tıbbi eğitim videoları</p>
+
+    <!-- ✅ Kategori seçici -->
+    <select id="kategoriSecimi">
+      <option value="Tümü">Tüm Kategoriler</option>
+    </select>
+
+    <!-- ✅ Arama kutusu -->
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Videoda ara..."
+      onkeyup="aramaYap()"
+    />
+  </header>
+
+  <!-- ✅ Video kartları buraya eklenecek -->
+  <main id="videoListesi"></main>
+
+  <footer>
+    <p>&copy; 2025 MediSea</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
